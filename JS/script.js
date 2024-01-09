@@ -1,31 +1,39 @@
-// Afficher le  JSON et le SHA dans la console.log
-// voir crypto.subtle
-
 // attraper directement le formulair et addEventListener -> submit + prevent defaut pour éviter le rechargement
-document.getElementById('formulaire').addEventListener('submit', function (event) {
+document.getElementById('formulaire').addEventListener('submit', async function (event) {
     event.preventDefault();
-    let titre = document.getElementById("titre");
-    let categorie = document.getElementById("categorie");
-    let categorieSelectionnee = categorie.value;
-    let details = document.getElementById("details");
-    let utilisateur = document.getElementById("utilisateur");
 
-    console.log(titre.value);
-    console.log(details.value);
-    console.log(utilisateur.value);
-    console.log(categorieSelectionnee);
+    let titre = document.getElementById("titre").value;
+    let categorie = document.getElementById("categorie").value;
+    let details = document.getElementById("details").value;
+    let utilisateur = document.getElementById("utilisateur").value;
 
-    // Convertir les données récupérées en JSON
-    let donneesFormulaire = {
+    console.log(titre);
+    console.log(categorie);
+    console.log(details);
+    console.log(utilisateur);
+
+    let donneesFormulaire = { // convertir les données en format JSON
         titre: titre,
         categorie: categorie,
         details: details,
         utilisateur: utilisateur
     }
 
-    // Convertir l'objet donneesFormulaire en JSON
-    let donneesJson = JSON.stringify(donneesFormulaire)
-    console.log(donneesJson)
+    let donneesJson = JSON.stringify(donneesFormulaire); // convertir les données du JSON en chaines
+    console.log(donneesJson);
 
+    // fonction de la doc https://developer.mozilla.org/fr/docs/Web/API/SubtleCrypto/digest
+    async function digestMessage(message) {
+        const msgUint8 = new TextEncoder().encode(message); // encode comme (utf-8) Uint8Array
+        const hashBuffer = await crypto.subtle.digest("SHA-256", msgUint8); // fait le condensé
+        const hashArray = Array.from(new Uint8Array(hashBuffer)); // convertit le buffer en tableau d'octet
+        const hashHex = hashArray
+            .map((b) => b.toString(16).padStart(2, "0"))
+            .join(""); // convertit le tableau en chaîne hexadélimale
+        return hashHex;
+    }
+    const digestHex = await digestMessage(donneesJson); // mettre en paramètre mes donnéesJson
+    console.log(digestHex);
 });
+
 
