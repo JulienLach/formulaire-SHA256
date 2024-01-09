@@ -1,0 +1,38 @@
+* {
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+}
+
+body {
+    font-family: 'Ubuntu', sans-serif;
+}
+
+.container {
+    width: 500px;
+    margin: auto;
+}
+
+h1 {
+    text-align: center;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5em;
+}
+
+textarea {
+    padding: 1em;
+}
+
+input,
+select {
+    padding: 0.6em;
+}
+
+#submit {
+    width: 50%;
+    margin: auto;
+}

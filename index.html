@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Ubuntu&display=swap" rel="stylesheet">
+    <link rel=stylesheet href=css/style.css>
+    <title>Formulaire SHA256</title>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Formulaire SHA256</h1>
+        <form action="">
+            <label for="titre">Titre de l'offre</label>
+            <input type="titre">
+            <label for="categorie">Categories</label>
+            <select name="categorie" id="categorie">
+                <option value="">-- Choisir une catégorie --</option>
+                <option value="graines">Graines</option>
+                <option value="plantes">Plantes</option>
+                <option value="arbres">Arbres</option>
+            </select>
+            <label for="details">Détail de l'offre</label>
+            <textarea id="details" name="details" rows="5" cols="33"></textarea>
+            <label for="utilisateur">Nom d'utilisateur</label>
+            <input type="utilisateur">
+            <input type="submit" id="submit">
+        </form>
+    </div>
+    <div class="synthese-formulaire">
+
+    </div>
+
+    <script src=JS/script.js></script>
+</body>
+
+</html>
