@@ -2,10 +2,11 @@
 document.getElementById('formulaire').addEventListener('submit', async function (event) {
     event.preventDefault();
 
-    let titre = document.getElementById("titre").value;
+    let titre = document.getElementById("titre").value; // récupérer les données du formulaire directement ici avec .value
     let categorie = document.getElementById("categorie").value;
     let details = document.getElementById("details").value;
     let utilisateur = document.getElementById("utilisateur").value;
+    let hash = document.getElementById("hash")
 
     console.log(titre);
     console.log(categorie);
@@ -34,6 +35,7 @@ document.getElementById('formulaire').addEventListener('submit', async function 
     }
     const digestHex = await digestMessage(donneesJson); // mettre en paramètre mes donnéesJson
     console.log(digestHex);
+    hash.value = digestHex
 });
 
 
