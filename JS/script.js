@@ -1,4 +1,4 @@
-// attraper directement le formulair et addEventListener -> submit + prevent defaut pour éviter le rechargement
+// attraper directement le formulaire et addEventListener -> submit + prevent defaut pour éviter le rechargement
 document.getElementById('formulaire').addEventListener('submit', async function (event) {
     event.preventDefault();
 
@@ -36,6 +36,5 @@ document.getElementById('formulaire').addEventListener('submit', async function 
     const digestHex = await digestMessage(donneesJson); // mettre en paramètre mes donnéesJson pour avoir l'empreinte
     console.log(digestHex);
     hash.value = digestHex
+
 });
-
-
