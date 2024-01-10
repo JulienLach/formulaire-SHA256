@@ -33,7 +33,7 @@ document.getElementById('formulaire').addEventListener('submit', async function 
             .join(""); // convertit le tableau en chaîne hexadélimale
         return hashHex;
     }
-    const digestHex = await digestMessage(donneesJson); // mettre en paramètre mes donnéesJson
+    const digestHex = await digestMessage(donneesJson); // mettre en paramètre mes donnéesJson pour avoir l'empreinte
     console.log(digestHex);
     hash.value = digestHex
 });
