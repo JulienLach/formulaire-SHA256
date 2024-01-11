@@ -1,5 +1,4 @@
-
-// attraper directement le formulaire et addEventListener -> submit + prevent defaut pour éviter le rechargement
+// Attraper le formulaire et addEventListener -> submit + prevent defaut pour éviter le rechargement
 document.getElementById('formulaire').addEventListener('submit', async function (event) {
     event.preventDefault();
 
@@ -38,6 +37,8 @@ document.getElementById('formulaire').addEventListener('submit', async function 
     console.log(digestHex);
     hash.value = digestHex
 
-    const openpgp = require('openpgp');
+    // const openpgp = require('openpgp');
+    // 
+
 
 });
