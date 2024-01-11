@@ -21,8 +21,12 @@ async function generateKeyPair() {
     return { privateKey, publicKey } //  return {} les crochets permettent de retourner un tableau valeurs avec return{}
 };
 
+// fonction de la doc 
 // Fonction chiffrer le message avec la clé privée
-async function chiffrerMessage(privateKey, message) {
+async function chiffrerMessage() {
+    const keyPair = await generateKeyPair();
+    const publicKey = keyPair.publicKey; // Extracting the public key from the generated key pair
+    const privateKey = keyPair.privateKey; // Extracting the private key from the generated key pair
 
     const encrypted = await openpgp.encrypt({
         message: await openpgp.createMessage({ text: 'Hello, World!' }), // input as Message object
@@ -31,23 +35,26 @@ async function chiffrerMessage(privateKey, message) {
     });
     console.log(encrypted); // '-----BEGIN PGP MESSAGE ... END PGP MESSAGE-----'
 }
-chiffrerMessage(privateKey, message);
+chiffrerMessage();
 
 
-// Fonction déchiffrer le message avec la clé publique et le messageChiffré
-async function dechiffrerMessage() {
 
-    const message = await openpgp.readMessage({
-        armoredMessage: encrypted // parse armored message
-    });
-    const { data: decrypted, signatures } = await openpgp.decrypt({
-        message,
-        verificationKeys: publicKey, // optional
-        decryptionKeys: privateKey
-    });
-    console.log(decrypted); // 'Hello, World!'
-    // check signature validity (signed messages only)
-}
+
+
+// // Fonction déchiffrer le message avec la clé publique et le messageChiffré
+// async function dechiffrerMessage(publicKey, messageChiffré) {
+
+//     const message = await openpgp.readMessage({
+//         armoredMessage: encrypted // parse armored message
+//     });
+//     const { data: decrypted, signatures } = await openpgp.decrypt({
+//         message,
+//         verificationKeys: publicKey, // optional
+//         decryptionKeys: privateKey
+//     });
+//     console.log(decrypted); // 'Hello, World!'
+//     // check signature validity (signed messages only)
+// }
 
 
 
