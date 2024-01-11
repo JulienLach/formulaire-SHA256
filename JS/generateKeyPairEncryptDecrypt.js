@@ -1,13 +1,13 @@
-// en 3 fonctions , générer les clés, ensuite je chiffre un message, ensuite je déchiffre le message
-// Generate new key pair
-// générer une paire de clés
+// En 3 fonctions , générer les clés, ensuite je chiffre un message, ensuite je déchiffre le message
+// Generate new key pair = générer une paire de clés
 // phrase de passe -> mot de passe utilisateur sert a chiffrer la clé
 // on chifre avec la privée on déchiffre avec la publique
 // Utiliser format armored pour les clés -> format lisible text
 
 // Appeler la bibliotheque openpgp installée avec npm dans dossier node_modules
-const openpgp = require('openpgp'); // Assuming openpgp is a CommonJS package
+const openpgp = require('openpgp');
 
+// fonction de la doc : https://github.com/openpgpjs/openpgpjs/blob/main/README.md#generate-new-key-pair
 async function generateKeyPair() {
     const { privateKey, publicKey } = await openpgp.generateKey({
         type: 'ecc', // Type of the key, defaults to ECC
@@ -19,7 +19,7 @@ async function generateKeyPair() {
     console.log(privateKey);     // '-----BEGIN PGP PRIVATE KEY BLOCK ... '
     console.log(publicKey);      // '-----BEGIN PGP PUBLIC KEY BLOCK ... '
 
-    return { publicKey, privateKey }
+    return { publicKey, privateKey } // les crochets permettent de retourner plusieurs valeurs avec return{}
 };
 
 // fonction encrypt et decrypt le message et fonction decrypt le message
@@ -27,7 +27,7 @@ async function generateKeyPair() {
 // Trouver comment mettre en paramètre la publicKey et la privateKey dans la fonction encryptAndDecryptMessage
 
 async function encryptEtDecryptMessage(privateKeyArmored, publicKeyArmored) {
-
+    // passer en paramètre privateKeyArmored et publicKeyArmored qui prenne la valeur de privateKey et publicKey 
     const passphrase = 'super long and hard to guess secret'; // passphrase to decrypt private key
 
     const publicKey = await openpgp.readKey({ armoredKey: publicKeyArmored });
@@ -37,10 +37,10 @@ async function encryptEtDecryptMessage(privateKeyArmored, publicKeyArmored) {
         passphrase
     });
 
-    const encrypted = await openpgp.encrypt({
+    const encrypted = await openpgp.encrypt({ // encrypter le message
         message: await openpgp.createMessage({ text: 'Hello, World!' }), // input as Message object
         encryptionKeys: publicKey,
-        signingKeys: privateKey // optional
+        signingKeys: privateKey // Ajouter la clé privée pour signer le message
     });
     console.log(encrypted); // '-----BEGIN PGP MESSAGE ... END PGP MESSAGE-----'
 
@@ -63,8 +63,8 @@ async function encryptEtDecryptMessage(privateKeyArmored, publicKeyArmored) {
     }
 }
 
-async function main() {
+async function main() { //fonction main qui contient un appel des deux autres fonctions
     const { privateKey, publicKey } = await generateKeyPair();
     await encryptEtDecryptMessage(privateKey, publicKey);
 }
-main();
+main(); // appel de la  fonction main
