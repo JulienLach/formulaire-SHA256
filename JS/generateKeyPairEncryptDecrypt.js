@@ -5,7 +5,6 @@
 // Utiliser format armored pour les clés -> format lisible text
 
 // Appeler la bibliotheque openpgp installée avec npm dans dossier node_modules
-const openpgp = require('openpgp');
 
 // fonction de la doc : https://github.com/openpgpjs/openpgpjs/blob/main/README.md#generate-new-key-pair
 async function generateKeyPair() {
@@ -21,50 +20,11 @@ async function generateKeyPair() {
 
     return { publicKey, privateKey } // les crochets permettent de retourner plusieurs valeurs avec return{}
 };
+generateKeyPair();
 
+// fonction chiffrer (privée, message)
+// fonction déchiffrer (publique, chiffre)
 // fonction encrypt et decrypt le message et fonction decrypt le message
 // Fonction pour chiffrer et déchiffrer un message
 // Trouver comment mettre en paramètre la publicKey et la privateKey dans la fonction encryptAndDecryptMessage
 
-async function encryptEtDecryptMessage(privateKeyArmored, publicKeyArmored) {
-    // passer en paramètre privateKeyArmored et publicKeyArmored qui prenne la valeur de privateKey et publicKey 
-    const passphrase = 'super long and hard to guess secret'; // passphrase to decrypt private key
-
-    const publicKey = await openpgp.readKey({ armoredKey: publicKeyArmored });
-
-    const privateKey = await openpgp.decryptKey({
-        privateKey: await openpgp.readPrivateKey({ armoredKey: privateKeyArmored }),
-        passphrase
-    });
-
-    const encrypted = await openpgp.encrypt({ // encrypter le message
-        message: await openpgp.createMessage({ text: 'Hello, World!' }), // input as Message object
-        encryptionKeys: publicKey,
-        signingKeys: privateKey // Ajouter la clé privée pour signer le message
-    });
-    console.log(encrypted); // '-----BEGIN PGP MESSAGE ... END PGP MESSAGE-----'
-
-    const message = await openpgp.readMessage({
-        armoredMessage: encrypted // parse armored message
-    });
-    const { data: decrypted, signatures } = await openpgp.decrypt({
-        message,
-        verificationKeys: publicKey, // optional
-        decryptionKeys: privateKey
-    });
-
-    console.log(decrypted); // 'Hello, World!'
-    // check signature validity (signed messages only)
-    try {
-        await signatures[0].verified; // throws on invalid signature
-        console.log('Signature is valid');
-    } catch (e) {
-        throw new Error('Signature could not be verified: ' + e.message);
-    }
-}
-
-async function main() { //fonction main qui contient un appel des deux autres fonctions
-    const { privateKey, publicKey } = await generateKeyPair();
-    await encryptEtDecryptMessage(privateKey, publicKey);
-}
-main(); // appel de la  fonction main
