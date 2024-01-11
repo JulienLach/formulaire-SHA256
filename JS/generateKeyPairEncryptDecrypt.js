@@ -4,7 +4,7 @@
 // on chifre avec la privée on déchiffre avec la publique
 // Utiliser format armored pour les clés -> format lisible text
 
-// Appeler la bibliotheque openpgp installée avec npm dans dossier node_modules
+// Openpgp appelé avec un CDN dans le html
 
 // fonction de la doc : https://github.com/openpgpjs/openpgpjs/blob/main/README.md#generate-new-key-pair
 async function generateKeyPair() {
@@ -18,9 +18,16 @@ async function generateKeyPair() {
     console.log(privateKey);     // '-----BEGIN PGP PRIVATE KEY BLOCK ... '
     console.log(publicKey);      // '-----BEGIN PGP PUBLIC KEY BLOCK ... '
 
-    return { publicKey, privateKey } // les crochets permettent de retourner plusieurs valeurs avec return{}
+    return (publicKey) //  return {} les crochets permettent de retourner un tableau valeurs avec return{}
 };
-generateKeyPair();
+
+// fonction chiffrer 
+async function chiffrerMessage() {
+    let publicKey = await generateKeyPair();
+
+}
+
+
 
 // fonction chiffrer (privée, message)
 // fonction déchiffrer (publique, chiffre)
