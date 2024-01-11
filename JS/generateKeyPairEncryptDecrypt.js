@@ -18,13 +18,35 @@ async function generateKeyPair() {
     console.log(privateKey);     // '-----BEGIN PGP PRIVATE KEY BLOCK ... '
     console.log(publicKey);      // '-----BEGIN PGP PUBLIC KEY BLOCK ... '
 
-    return (publicKey) //  return {} les crochets permettent de retourner un tableau valeurs avec return{}
+    return { privateKey, publicKey } //  return {} les crochets permettent de retourner un tableau valeurs avec return{}
 };
 
-// fonction chiffrer 
-async function chiffrerMessage() {
-    let publicKey = await generateKeyPair();
+// Fonction chiffrer le message avec la clé privée
+async function chiffrerMessage(privateKey, message) {
 
+    const encrypted = await openpgp.encrypt({
+        message: await openpgp.createMessage({ text: 'Hello, World!' }), // input as Message object
+        encryptionKeys: publicKey,
+        signingKeys: privateKey // optional
+    });
+    console.log(encrypted); // '-----BEGIN PGP MESSAGE ... END PGP MESSAGE-----'
+}
+chiffrerMessage(privateKey, message);
+
+
+// Fonction déchiffrer le message avec la clé publique et le messageChiffré
+async function dechiffrerMessage() {
+
+    const message = await openpgp.readMessage({
+        armoredMessage: encrypted // parse armored message
+    });
+    const { data: decrypted, signatures } = await openpgp.decrypt({
+        message,
+        verificationKeys: publicKey, // optional
+        decryptionKeys: privateKey
+    });
+    console.log(decrypted); // 'Hello, World!'
+    // check signature validity (signed messages only)
 }
 
 
