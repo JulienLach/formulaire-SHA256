@@ -38,7 +38,7 @@ async function chiffrerMessage() {
 chiffrerMessage();
 
 
-// Fonction correction christophe à tester correction
+// Fonction correction christophe à tester correctiong
 // async function chiffrerMessage(key, msg) {
 //     const encrypted = await openpgp.encrypt({
 //         message: await openpgp.createMessage({ text: msg }),          encryptionKeys: key
