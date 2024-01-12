@@ -21,7 +21,7 @@ async function generateKeyPair() {
     return { privateKey, publicKey } //  return {} les crochets permettent de retourner un tableau valeurs avec return{}
 };
 
-// fonction de la doc 
+// Fonction de la doc 
 // Fonction chiffrer le message avec la clé privée
 async function chiffrerMessage() {
     const keyPair = await generateKeyPair();
@@ -38,24 +38,14 @@ async function chiffrerMessage() {
 chiffrerMessage();
 
 
-
-
-
-// // Fonction déchiffrer le message avec la clé publique et le messageChiffré
-// async function dechiffrerMessage(publicKey, messageChiffré) {
-
-//     const message = await openpgp.readMessage({
-//         armoredMessage: encrypted // parse armored message
+// Fonction correction christophe à tester correction
+// async function chiffrerMessage(key, msg) {
+//     const encrypted = await openpgp.encrypt({
+//         message: await openpgp.createMessage({ text: msg }),          encryptionKeys: key
 //     });
-//     const { data: decrypted, signatures } = await openpgp.decrypt({
-//         message,
-//         verificationKeys: publicKey, // optional
-//         decryptionKeys: privateKey
-//     });
-//     console.log(decrypted); // 'Hello, World!'
-//     // check signature validity (signed messages only)
+//     return(encrypted); 
 // }
-
+// let messageChiffre  = await chiffrerMessage(privateKey,"Hello world");
 
 
 // fonction chiffrer (privée, message)
